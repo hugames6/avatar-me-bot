@@ -1,1 +1,1 @@
-from keyboards.keyboards import first_step
+from keyboards.keyboards import first_keyboard, second_keyboard, gender, agr
