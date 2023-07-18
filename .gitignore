@@ -1,11 +1,9 @@
 /venv
-/__pycache__
 /template.png
 /user.jpg
+/__pycache__
+/database/__pycache__
 /hendlers/__pycache__
 /keyboards/__pycache__
-/database/__pycache__
-/amplitude/__pycache__
-/stablediffusion/__pycache__
-/stablediffusion/user.jpg
 /roop/__pycache__
+/stablediffusion/__pycache__
