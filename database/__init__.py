@@ -1,1 +1,1 @@
-from database.db import sql_start, sql_add_user, sql_add_10, sql_add_100, sql_add_25, sql_add_50, sql_get_tries, sql_update_tries
+from database.db import *

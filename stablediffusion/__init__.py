@@ -1,0 +1,1 @@
+from stablediffusion.stable import generate_man, generate_woman

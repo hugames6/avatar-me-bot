@@ -8,10 +8,14 @@ from database import sql_add_user, sql_update_tries
 from keyboards import first_keyboard, second_keyboard, gender, agr
 from bot import bot, dp
 from config import BOT_TOKEN
+from roop import roop_deepfake
+from stablediffusion import generate_woman, generate_man
 
 import requests
 
 import time
+
+gen = ' '
 
 class FSMGetPhoto(StatesGroup):
     get_user_photo = State()
@@ -46,11 +50,14 @@ async def start_fird(callback:CallbackQuery):
 
 @dp.callback_query_handler(Text(startswith='gender_'))
 async def user_gender_choise(callback:CallbackQuery):
+    global gen
     user_choise = callback.data.split('_')[1]
     if user_choise == 'male':
         await bot.send_message(callback.from_user.id, 'Вы мужчина! Приступим?', reply_markup=agr)
+        gen = 'male'
     elif user_choise == 'female':
         await bot.send_message(callback.from_user.id, 'Вы женщина! Приступим?', reply_markup=agr)
+        gen = 'female'
 
 @dp.callback_query_handler(text='agreed')
 async def get_photo(message:Message):
@@ -59,13 +66,22 @@ async def get_photo(message:Message):
 async def refreshing_photo(message:Message):
     await bot.send_message(message.from_user.id, 'Вы отправили фото!')
     file_id = message.photo[-1].file_id
+    await message.photo[-1].download(destination_file='user.jpg')
     uri = f"https://api.telegram.org/bot/{BOT_TOKEN}/getFile?file_id={file_id}"
     response = requests.get(uri)
     print(uri)
     print(response.json())
+    print(file_id)
     b =  await sql_update_tries(user_id=message.from_user.id)
     if b == True:
-        await bot.send_photo(message.from_user.id, photo=file_id)
+        if gen == 'male':
+            #await generate_man()
+            result = roop_deepfake()
+        elif gen == 'female':
+            #await generate_woman()
+            result = roop_deepfake()
+        await bot.send_message(message.from_user.id, f'{result}')
+        # await bot.send_photo(message.from_user.id, photo=file_id)
     elif b == False:
         await bot.send_message(message.from_user.id, 'У вас закончились попытки!')
 

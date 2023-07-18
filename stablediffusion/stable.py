@@ -5,9 +5,7 @@ import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 import warnings
 from PIL import Image
 import random
-import asyncio
 
-os.chdir('stablediffusion')
 
 async def generate_man():
     for i in range(0, 2):
@@ -49,6 +47,4 @@ async def generate_photo(prompt):
                 warnings.warn("Неверный промпт, или ошибка его обслуживания")
             if artifact.type == generation.ARTIFACT_IMAGE:
                 img = Image.open(io.BytesIO(artifact.binary))
-                img.save(str(artifact.seed)+ ".png")
-
-asyncio.run(generate_woman())
+                img.save("template.png")
