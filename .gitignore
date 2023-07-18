@@ -1,5 +1,7 @@
 /venv
 /__pycache__
+/template.png
+/user.jpg
 /hendlers/__pycache__
 /keyboards/__pycache__
 /database/__pycache__
